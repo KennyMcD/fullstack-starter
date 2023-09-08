@@ -47,14 +47,14 @@ public class InventoryController {
    * @return Deleted inventory
    */
   @DeleteMapping
-  public Optional<Inventory> deleteProductById(@RequestBody String id) {
+  public Optional<Inventory> deleteInventoryById(@RequestBody String id) {
     Assert.notNull(id, "Inventory Id was not provided");
     return this.inventoryDAO.delete(id);
   }
 
   /**
-   * Find Products.
-   * @return List of Product.
+   * Find Inventorys.
+   * @return List of Inventory.
    */
   @GetMapping
   public List<Inventory> findInventories() {

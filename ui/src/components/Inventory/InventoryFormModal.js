@@ -4,7 +4,6 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Grid from '@material-ui/core/Grid'
-import { MeasurementUnits } from '../../constants/units/'
 import React from 'react'
 import TextField from '../Form/TextField'
 import { Field, Form, Formik } from 'formik'
@@ -17,7 +16,8 @@ class InventoryFormModal extends React.Component {
       handleInventory,
       title,
       initialValues,
-      products
+      products,
+      measurementUnits
     } = this.props
     return (
       <Dialog
@@ -86,12 +86,8 @@ class InventoryFormModal extends React.Component {
                       label='Unit Of Measurement'
                       component="select"
                     >
-                      <option>{MeasurementUnits.CUP.name}</option>
-                      <option>{MeasurementUnits.GALLON.name}</option>
-                      <option>{MeasurementUnits.OUNCE.name}</option>
-                      <option>{MeasurementUnits.PINT.name}</option>
-                      <option>{MeasurementUnits.POUND.name}</option>
-                      <option>{MeasurementUnits.QUART.name}</option>
+                      <option measurementUnit=''></option>
+                      {measurementUnits.map(unit => <option measurementUnit={unit}>{unit}</option> )}
                     </Field>
                     <Field
                       custom={{ variant: 'outlined', fullWidth: true, }}

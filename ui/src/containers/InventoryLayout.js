@@ -112,7 +112,10 @@ const InventoryLayout = (props) => {
   }
 
   const isSelected = (id) => selected.indexOf(id) !== -1
-  let currentDate = new Date().toLocaleDateString()
+
+  const date = new Date()
+  let currentDate = moment(date).format('YYYY-MM-DD') + 'T12:00:00Z'
+
 
   return (
     <Grid container>
@@ -176,6 +179,7 @@ const InventoryLayout = (props) => {
             bestBeforeDate: currentDate,
             neverExpires: false }}
           products={products}
+          measurementUnits={Object.keys(MeasurementUnits)}
         />
       </Grid>
     </Grid>

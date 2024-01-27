@@ -17,7 +17,8 @@ class InventoryFormModal extends React.Component {
       title,
       initialValues,
       products,
-      measurementUnits
+      measurementUnits,
+      required
     } = this.props
     return (
       <Dialog
@@ -49,12 +50,14 @@ class InventoryFormModal extends React.Component {
                       name='name'
                       label='Name'
                       component={TextField}
+                      validate={required}
                     />
                     <Field
                       custom={{ variant: 'outlined', fullWidth: true, }}
                       name='productType'
                       label='Product Type'
                       component="select"
+                      validate={required}
                     >
                       <option productType=''></option>
                       {products.map(product => <option productType={product.name}>{product.name}</option> )}
@@ -85,6 +88,7 @@ class InventoryFormModal extends React.Component {
                       name='unitOfMeasurement'
                       label='Unit Of Measurement'
                       component="select"
+                      validate={required}
                     >
                       <option measurementUnit=''></option>
                       {measurementUnits.map(unit => <option measurementUnit={unit}>{unit}</option> )}

@@ -116,6 +116,7 @@ const InventoryLayout = (props) => {
   const date = new Date()
   let currentDate = moment(date).format('YYYY-MM-DD') + 'T12:00:00Z'
 
+  const required = value => value ? undefined : 'Required'
 
   return (
     <Grid container>
@@ -180,6 +181,7 @@ const InventoryLayout = (props) => {
             neverExpires: false }}
           products={products}
           measurementUnits={Object.keys(MeasurementUnits)}
+          required={required}
         />
       </Grid>
     </Grid>

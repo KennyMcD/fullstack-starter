@@ -1,6 +1,7 @@
 package com.starter.fullstack.dao;
 
 import com.starter.fullstack.api.Inventory;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.annotation.Resource;
@@ -90,7 +91,9 @@ public class InventoryDAOTest {
   @Test
   public void delete() {
     // Deleting Inventory that doesn't exist
-    Optional<Inventory> outInv = this.inventoryDAO.delete("23");
+    List<String> idList = new ArrayList<String>();
+    idList.add("23");
+    Optional<Inventory> outInv = this.inventoryDAO.delete(idList);
     Assert.assertFalse(outInv.isPresent());
 
     // Deleting Inventory that does exist
@@ -101,7 +104,10 @@ public class InventoryDAOTest {
     Inventory inv = this.inventoryDAO.create(inventory);
     Assert.assertEquals(this.mongoTemplate.estimatedCount(Inventory.class), 1);
     
-    outInv = this.inventoryDAO.delete(inv.getId());
+    idList.remove(0);
+    idList.add(inv.getId());
+
+    outInv = this.inventoryDAO.delete(idList);
     Assert.assertTrue(outInv.isPresent());
     Assert.assertEquals(this.mongoTemplate.estimatedCount(Inventory.class), 0);
   }

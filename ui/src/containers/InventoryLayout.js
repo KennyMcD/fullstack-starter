@@ -195,7 +195,7 @@ const InventoryLayout = (props) => {
           isDialogOpen={isDeleteOpen}
           handleDelete={removeInventory}
           handleDialog={toggleModals}
-          initialValues={selected.map(selected => selected.id)}
+          initialValues={selected}
         />
       </Grid>
     </Grid>

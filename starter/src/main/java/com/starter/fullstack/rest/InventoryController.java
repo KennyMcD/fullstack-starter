@@ -43,13 +43,13 @@ public class InventoryController {
   /**
    * Delete Inventory By Id.
    *
-   * @param id id.
+   * @param ids ids.
    * @return Deleted inventory
    */
   @DeleteMapping
-  public Optional<Inventory> deleteInventoryById(@RequestBody String id) {
-    Assert.notNull(id, "Inventory Id was not provided");
-    return this.inventoryDAO.delete(id);
+  public Optional<Inventory> deleteInventoryById(@RequestBody List<String> ids) {
+    Assert.notNull(ids, "Inventory Id was not provided");
+    return this.inventoryDAO.delete(ids);
   }
 
   /**

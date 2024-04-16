@@ -59,8 +59,8 @@ class InventoryFormModal extends React.Component {
                       component="select"
                       validate={required}
                     >
-                      <option productType=''></option>
-                      {products.map(product => <option productType={product.name}>{product.name}</option> )}
+                      <option producttype=''></option>
+                      {products.map(product => <option producttype={product.name}>{product.name}</option> )}
                     </Field>
                     <Field
                       custom={{ variant: 'outlined', fullWidth: true, }}
@@ -90,8 +90,8 @@ class InventoryFormModal extends React.Component {
                       component="select"
                       validate={required}
                     >
-                      <option measurementUnit=''></option>
-                      {measurementUnits.map(unit => <option measurementUnit={unit}>{unit}</option> )}
+                      <option measurementunit=''></option>
+                      {measurementUnits.map(unit => <option measurementunit={unit}>{unit}</option> )}
                     </Field>
                     <Field
                       custom={{ variant: 'outlined', fullWidth: true, }}

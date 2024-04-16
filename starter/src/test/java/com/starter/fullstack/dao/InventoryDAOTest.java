@@ -111,4 +111,40 @@ public class InventoryDAOTest {
     Assert.assertTrue(outInv.isPresent());
     Assert.assertEquals(this.mongoTemplate.estimatedCount(Inventory.class), 0);
   }
+
+  /**
+   * Test retrieve method.
+   */
+  @Test
+  public void retrieve() {
+    Inventory inventory = new Inventory();
+    inventory.setName(NAME);
+    inventory.setProductType(PRODUCT_TYPE);
+    Inventory outInv = this.inventoryDAO.create(inventory);
+    Assert.assertEquals(this.mongoTemplate.estimatedCount(Inventory.class), 1);
+
+    Optional<Inventory> outInv2 = this.inventoryDAO.retrieve(outInv.getId());
+    Assert.assertTrue(outInv2.isPresent());
+    Assert.assertEquals(outInv2.get(), outInv);
+  }
+
+  /**
+   * Test update method.
+   */
+  @Test
+  public void update() {
+    Inventory inventory = new Inventory();
+    inventory.setName(NAME);
+    inventory.setProductType(PRODUCT_TYPE);
+    Inventory outInv = this.inventoryDAO.create(inventory);
+    Assert.assertEquals(this.mongoTemplate.estimatedCount(Inventory.class), 1);
+
+    Inventory newInventory = inventory;
+    newInventory.setName("UpdatedInv");
+    Optional<Inventory> outInv2 = this.inventoryDAO.update(outInv.getId(), newInventory);
+    
+    Assert.assertTrue(outInv2.isPresent());
+    Assert.assertNotSame(outInv2.get(), outInv);
+    Assert.assertEquals(outInv2.get(), newInventory);
+  }
 }

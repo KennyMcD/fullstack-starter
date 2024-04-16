@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.index.IndexOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.util.Assert;
+import static org.springframework.data.mongodb.core.FindAndReplaceOptions.options;
 
 /**
  * Inventory DAO
@@ -63,8 +64,9 @@ public class InventoryDAO {
    * @return Found Inventory.
    */
   public Optional<Inventory> retrieve(String id) {
-    // TODO
-    return Optional.empty();
+    Query query = new Query().addCriteria(Criteria.where("_id").is(id));
+    Inventory inventory = this.mongoTemplate.findOne(query, Inventory.class, "inventory");
+    return Optional.ofNullable(inventory);
   }
 
   /**
@@ -74,8 +76,10 @@ public class InventoryDAO {
    * @return Updated Inventory.
    */
   public Optional<Inventory> update(String id, Inventory inventory) {
-    // TODO
-    return Optional.empty();
+    Query query = new Query();
+    query.addCriteria(Criteria.where("id").is(id));
+    Inventory newInventory = this.mongoTemplate.findAndReplace(query, inventory, options().returnNew(), "inventory");
+    return Optional.ofNullable(newInventory);
   }
 
   /**

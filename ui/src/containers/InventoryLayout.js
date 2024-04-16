@@ -53,6 +53,8 @@ const InventoryLayout = (props) => {
   const isFetched = useSelector(state => state.inventory.fetched && state.products.fetched)
   const saveInventory = useCallback(inventory => { dispatch(inventoryDuck.saveInventory(inventory)) }, [dispatch])
   const removeInventory = useCallback(ids => { dispatch(inventoryDuck.removeInventory(ids)) }, [dispatch])
+  const editInventory = useCallback(selected => { dispatch(inventoryDuck.updateInventory(selected, selected.id)) },
+    [dispatch])
 
   useEffect(() => {
     if (!isFetched) {
@@ -67,6 +69,7 @@ const InventoryLayout = (props) => {
   const [selected, setSelected] = React.useState([])
   const [isCreateOpen, setCreateOpen] = React.useState(false)
   const [isDeleteOpen, setDeleteOpen] = React.useState(false)
+  const [isEditOpen, setEditOpen] = React.useState(false)
 
   const toggleCreate = () => {
     setCreateOpen(true)
@@ -76,10 +79,14 @@ const InventoryLayout = (props) => {
     setDeleteOpen(true)
   }
 
+  const toggleEdit = () => {
+    setEditOpen(true)
+  }
+
   const toggleModals = (resetChecked) => {
     setCreateOpen(false)
     setDeleteOpen(false)
-    //setEditOpen(false)
+    setEditOpen(false)
     if (resetChecked) {
       setSelected([])
     }
@@ -117,9 +124,19 @@ const InventoryLayout = (props) => {
     }
     setSelected(newSelected)
   }
-
   const isSelected = (id) => selected.indexOf(id) !== -1
 
+  const getSelectedInv = (id) => {
+    let selectedIventory
+
+    Object.entries(inventory).forEach(inv => {
+      if (inv[1].id === id) {
+        selectedIventory = inv[1]
+      }
+    })
+    //selected.indexOf(id) !== -1
+    return selectedIventory
+  }
   const date = new Date()
   let currentDate = moment(date).format('YYYY-MM-DD') + 'T12:00:00Z'
 
@@ -133,6 +150,7 @@ const InventoryLayout = (props) => {
           title='Inventory'
           toggleCreate={toggleCreate}
           toggleDelete={toggleDelete}
+          toggleEdit={toggleEdit}
         />
         <TableContainer component={Paper}>
           <Table size='small' stickyHeader>
@@ -196,6 +214,16 @@ const InventoryLayout = (props) => {
           handleDelete={removeInventory}
           handleDialog={toggleModals}
           initialValues={selected}
+        />
+        <InventoryFormModal
+          title='Update'
+          formName='inventoryUpdate'
+          isDialogOpen={isEditOpen}
+          handleDialog={toggleModals}
+          handleInventory={editInventory}
+          products={products}
+          measurementUnits={Object.keys(MeasurementUnits)}
+          initialValues={getSelectedInv(selected[0])}
         />
       </Grid>
     </Grid>
